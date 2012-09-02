@@ -17,15 +17,15 @@ class CourseController {
     }
 
     private void cleanDomain(map, key, Closure value) {
-        if(map[key].id != '1') { map[key] = value(map[key].id) } else { map.remove(key) }
+        if(map["${key}.id"] != '1') { map[key] = value(map["${key}.id"]) } else { map.remove(key) }
     }
 
     private Object listDetailed(params) {
-        def courseParams = params.findAll{ k, v -> ['level', 'title', 'subject', 'offeredBy', 'offeredVia'].contains(k) }
-        clean(courseParams, 'level') { it as Integer }
-        cleanDomain(courseParams, 'subject') { Subject.get(it) }
-        cleanDomain(courseParams, 'offeredBy') { University.get(it) }
+        clean(params, 'level') { it as Integer }
+        cleanDomain(params, 'subject') { Subject.get(it) }
+        cleanDomain(params, 'offeredBy') { University.get(it) }
 
+        def courseParams = params.findAll{ k, v -> ['level', 'title', 'subject', 'offeredBy', 'offeredVia'].contains(k) }
         Course.findAllWhere(courseParams)
     }
     
@@ -33,11 +33,12 @@ class CourseController {
         Course.findAllByTitleIlike("%${params.interest}%")
     }
 
-    def list(Integer max) {
-        params.max = [max ?: 10, 100].min()
+    def list(Integer max, Integer offset) {
+        params.max = max = max ?: 10
+        params.offset = offset = offset ?: 0
 
         def courseInstances = params.searchtype == 'detailed' ? listDetailed(params) : listInterests(params)
-        println courseInstances
+        courseInstances = courseInstances[offset..[(offset + max), courseInstances.size() - 1].min()]
         [courseInstanceList: courseInstances, courseInstanceTotal: courseInstances.size(), params: params]
     }
 
