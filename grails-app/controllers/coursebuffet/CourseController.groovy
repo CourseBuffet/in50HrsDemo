@@ -20,16 +20,24 @@ class CourseController {
         if(map[key].id != '1') { map[key] = value(map[key].id) } else { map.remove(key) }
     }
 
-    def list(Integer max) {
-        params.max = [max ?: 10, 100].min()
+    private Object listDetailed(params) {
         def courseParams = params.findAll{ k, v -> ['level', 'title', 'subject', 'offeredBy', 'offeredVia'].contains(k) }
-
         clean(courseParams, 'level') { it as Integer }
         cleanDomain(courseParams, 'subject') { Subject.get(it) }
         cleanDomain(courseParams, 'offeredBy') { University.get(it) }
 
-        def courseInstances = Course.findAllWhere(courseParams)
+        Course.findAllWhere(courseParams)
+    }
+    
+    private Object listInterests(params) {
+        Course.findAllByTitleIlike("%${params.interest}%")
+    }
 
+    def list(Integer max) {
+        params.max = [max ?: 10, 100].min()
+
+        def courseInstances = params.searchtype == 'detailed' ? listDetailed(params) : listInterests(params)
+        println courseInstances
         [courseInstanceList: courseInstances, courseInstanceTotal: courseInstances.size(), params: params]
     }
 

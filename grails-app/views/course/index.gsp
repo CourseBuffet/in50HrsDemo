@@ -20,8 +20,22 @@
 			</ul>
 			</g:hasErrors>
 			<g:form method="GET" action="list" >
+				<g:hiddenField name="searchtype" value="detailed" />
 				<fieldset class="form">
 					<g:render template="lookup_form"/>
+				</fieldset>
+				<fieldset class="buttons">
+					<g:submitButton name="index" class="list" value="${message(code: 'default.button.index.label', default: 'Lookup')}" />
+				</fieldset>
+			</g:form>
+
+			<g:form method="GET" action="list" >
+				<g:hiddenField name="searchtype" value="interest" />
+				<fieldset class="form">
+                    <div class="fieldcontain ${hasErrors(bean: courseInstance, field: 'subject', 'error')}">
+                        <label for="interest"> Interest </label>
+                        <g:field id="interest" name="interest" />
+                    </div>
 				</fieldset>
 				<fieldset class="buttons">
 					<g:submitButton name="index" class="list" value="${message(code: 'default.button.index.label', default: 'Lookup')}" />
