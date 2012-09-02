@@ -8,16 +8,29 @@ class RegisteredStudentController {
 
     def addCourse(Integer id) {
         if(session.user.registered) {
-            println session.user.dump()
-            def user = RegisteredStudent.get(session.user.id)
-            user.savedCourses << Course.get(id)
-            user.save(failOnError: true, flush: true)
-            println user.dump()
             session.user.refresh()
+            session.user.savedCourses << Course.get(id)
+            session.user.save(failOnError: true, flush: true)
             redirect(action: 'show', id: session.user.id)
         } else {
             redirect(action: 'create')
         }
+    }
+
+    def commitCourse(Integer id) {
+        session.user.refresh()
+        session.user.savedCourses.remove(Course.get(id))
+        session.user.commitedCourses << Course.get(id)
+        session.user.save(failOnError: true, flush: true)
+        redirect(action: 'show', id: session.user.id)
+    }
+
+    def finishCourse(Integer id) {
+        session.user.refresh()
+        session.user.commitedCourses.remove(Course.get(id))
+        session.user.doneCourses << Course.get(id)
+        session.user.save(failOnError: true, flush: true)
+        redirect(action: 'show', id: session.user.id)
     }
 
 /*
@@ -50,7 +63,6 @@ class RegisteredStudentController {
 
     def show(Long id) {
         def registeredStudentInstance = RegisteredStudent.get(id)
-        println registeredStudentInstance.dump()
         if (!registeredStudentInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'registeredStudent.label', default: 'RegisteredStudent'), id])
             redirect(action: "list")

@@ -39,7 +39,21 @@
             <h1>Saved Courses</h1>
             <ul class="property-list">
                 <g:each in="${registeredStudentInstance.savedCourses}" status="i" var="courseInstance">
-                    <li class="property-label"><g:link controller='course' action="show" id="${courseInstance.id}">${fieldValue(bean: courseInstance, field: "title")}</g:link>
+                    <li class="property-label">
+                        <g:link controller='course' action="show" id="${courseInstance.id}">${fieldValue(bean: courseInstance, field: "title")}</g:link>
+                        <g:link controller='registeredStudent' action="commitCourse" id="${courseInstance.id}">[Started]</g:link>
+                    </li>
+                </g:each>
+                <g:each in="${registeredStudentInstance.commitedCourses}" status="i" var="courseInstance">
+                    <li class="property-label">
+                        <g:link controller='course' action="show" id="${courseInstance.id}">${fieldValue(bean: courseInstance, field: "title")}</g:link>
+                        <g:link controller='registeredStudent' action="finishCourse" id="${courseInstance.id}">[Finished]</g:link>
+                    </li>
+                </g:each>
+                <g:each in="${registeredStudentInstance.doneCourses}" status="i" var="courseInstance">
+                    <li class="property-label">
+                        <g:link controller='course' action="show" id="${courseInstance.id}">${fieldValue(bean: courseInstance, field: "title")}</g:link> Done!
+                    </li>
                 </g:each>
             </h1>
 
