@@ -4,6 +4,8 @@ import org.springframework.dao.DataIntegrityViolationException
 
 class CourseController {
 
+    def beforeInterceptor = { if(!session.user) { session.user = new GuestStudent() } }
+
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index() {
@@ -53,6 +55,8 @@ class CourseController {
             redirect(action: "list")
             return
         }
+
+        session.user.viewedCourses << courseInstance
 
         [courseInstance: courseInstance]
     }

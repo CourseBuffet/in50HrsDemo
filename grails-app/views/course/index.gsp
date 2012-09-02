@@ -27,6 +27,17 @@
 					<g:submitButton name="index" class="list" value="${message(code: 'default.button.index.label', default: 'Lookup')}" />
 				</fieldset>
 			</g:form>
+
+            <g:if test="${session.user.viewedCourses}">
+            <h1>Courses viewed</h1>
+            <div class="nav" role="navigation">
+                <ul>
+                    <g:each in="${session.user.viewedCourses}" var="courseInstance">
+                    <li><g:link action="show" id="${courseInstance.id}">${fieldValue(bean: courseInstance, field: "title")}</g:link></li>
+                    </g:each>
+                </ul>
+            </div>
+            </g:if>
 		</div>
 	</body>
 </html>
