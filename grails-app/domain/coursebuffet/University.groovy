@@ -8,6 +8,6 @@ class University {
     String toString() { name }
 
     static constraints = {
-        website(url:true)
+        website(nullable: true, url:true)
     }
 }

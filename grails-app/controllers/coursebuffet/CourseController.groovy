@@ -10,12 +10,21 @@ class CourseController {
         //redirect(action: "list", params: params)
     }
 
+    private void clean(map, key, Closure value) {
+        if(map[key]) { map[key] = value(map[key]) } else { map.remove(key) }
+    }
+
+    private void cleanDomain(map, key, Closure value) {
+        if(map[key].id != '1') { map[key] = value(map[key].id) } else { map.remove(key) }
+    }
+
     def list(Integer max) {
         params.max = [max ?: 10, 100].min()
         def courseParams = params.findAll{ k, v -> ['level', 'title', 'subject', 'offeredBy', 'offeredVia'].contains(k) }
-        if(courseParams.level){ courseParams.level = courseParams.level as Integer }
-        if(courseParams.subject){ courseParams.subject = Subject.get(courseParams.subject.id) }
-        if(courseParams.offeredBy){ courseParams.offeredBy = University.get(courseParams.offeredBy.id) }
+
+        clean(courseParams, 'level') { it as Integer }
+        cleanDomain(courseParams, 'subject') { Subject.get(it) }
+        cleanDomain(courseParams, 'offeredBy') { University.get(it) }
 
         def courseInstances = Course.findAllWhere(courseParams)
 

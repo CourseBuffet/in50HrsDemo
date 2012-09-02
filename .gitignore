@@ -14,3 +14,4 @@
 /web-app/plugins
 /web-app/WEB-INF/classes
 /target
+*.swp

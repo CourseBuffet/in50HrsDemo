@@ -3,6 +3,9 @@ import coursebuffet.*
 class BootStrap {
 
     def init = { servletContext ->
+        new Subject(name: 'ALL').save(failOnError: true)
+        new University(name: 'ALL').save(failOnError: true)
+
         [   [name: 'Harvard', website: 'http://harvard.edu'],
             [name: 'Stanford', website: 'http://stanford.edu']].each { new University(it).save(failOnError: true) }
         [   [name: 'Coursera', website: 'http://coursera.com'],
