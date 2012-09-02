@@ -20,7 +20,10 @@
 	<body>
 		<div id="grailsLogo" role="banner">
             <a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.title"/></a>
-            <g:if test="${sesison?.user?.registered}">${fieldValue(bean: session.user, field: 'email')}</g:if>
+            <!-- ${session?.user.dump()} -->
+            <g:if test="${session?.user?.registered}">
+                <g:link class="user" controller='registeredStudent' action="show" id="${session.user.id}">${session.user.email}</g:link></li>
+            </g:if>
         </div>
 		<g:layoutBody/>
 		<div class="footer" role="contentinfo"></div>

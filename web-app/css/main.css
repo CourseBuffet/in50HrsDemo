@@ -96,6 +96,12 @@ img {
     font-size: 2em;
 }
 
+#grailsLogo a.user {
+    font-size: 1em;
+    display: inline-table;
+    margin-left: 28em;
+}
+
 .content {
 }
 

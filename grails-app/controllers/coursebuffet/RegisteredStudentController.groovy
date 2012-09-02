@@ -13,6 +13,7 @@ class RegisteredStudentController {
             session.user.save(failOnError: true, flush: true)
             redirect(action: 'show', id: session.user.id)
         } else {
+            session.course = id
             redirect(action: 'create')
         }
     }
@@ -58,7 +59,11 @@ class RegisteredStudentController {
 
         //flash.message = message(code: 'default.created.message', args: [message(code: 'registeredStudent.label', default: 'RegisteredStudent'), registeredStudentInstance.id])
         session.user = registeredStudentInstance
-        redirect(action: "show", id: registeredStudentInstance.id)
+        if(session.course) {
+            addCourse(session.course)
+        } else {
+            redirect(action: "show", id: registeredStudentInstance.id)
+        }
     }
 
     def show(Long id) {
