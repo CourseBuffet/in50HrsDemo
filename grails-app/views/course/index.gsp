@@ -25,7 +25,7 @@
 					<g:render template="lookup_form"/>
 				</fieldset>
 				<fieldset class="buttons">
-					<g:submitButton name="index" class="list" value="${message(code: 'default.button.index.label', default: 'Lookup')}" />
+					<g:submitButton name="index-detailed" class="list" value="${message(code: 'default.button.index.label', default: 'Lookup')}" />
 				</fieldset>
 			</g:form>
 
@@ -38,7 +38,7 @@
                     </div>
 				</fieldset>
 				<fieldset class="buttons">
-					<g:submitButton name="index" class="list" value="${message(code: 'default.button.index.label', default: 'Lookup')}" />
+					<g:submitButton name="index-interest" class="list" value="${message(code: 'default.button.index.label', default: 'Lookup')}" />
 				</fieldset>
 			</g:form>
 
