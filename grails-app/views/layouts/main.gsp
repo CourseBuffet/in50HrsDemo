@@ -18,7 +18,10 @@
 		<r:layoutResources />
 	</head>
 	<body>
-		<div id="grailsLogo" role="banner"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.title"/></a></div>
+		<div id="grailsLogo" role="banner">
+            <a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.title"/></a>
+            <g:if test="${sesison?.user?.registered}">${fieldValue(bean: session.user, field: 'email')}</g:if>
+        </div>
 		<g:layoutBody/>
 		<div class="footer" role="contentinfo"></div>
 		<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>

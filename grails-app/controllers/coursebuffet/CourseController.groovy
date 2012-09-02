@@ -9,6 +9,7 @@ class CourseController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index() {
+        println session.user?.dump()
         //redirect(action: "list", params: params)
     }
 

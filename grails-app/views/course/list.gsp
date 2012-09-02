@@ -34,6 +34,8 @@
 					
 						<th><g:message code="course.offeredVia.label" default="Offered Via" /></th>
 					
+						<th><g:message code="course.savetoprofile.label" default="Save to profile" /></th>
+					
 					</tr>
 				</thead>
 				<tbody>
@@ -49,6 +51,8 @@
 						<td>${fieldValue(bean: courseInstance, field: "offeredBy")}</td>
 					
 						<td>${fieldValue(bean: courseInstance, field: "offeredVia")}</td>
+					
+						<td><g:link controller="registeredStudent" action="addCourse" id="${courseInstance.id}">Save to profile</g:link></td>
 					
 					</tr>
 				</g:each>

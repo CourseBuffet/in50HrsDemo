@@ -1,5 +1,6 @@
 package coursebuffet
 
 class GuestStudent {
-    def viewedCourses = []
+    boolean registered = false
+    List<Course> viewedCourses = []
 }
