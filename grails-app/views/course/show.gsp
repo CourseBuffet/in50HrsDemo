@@ -68,6 +68,24 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${courseInstance?.website}">
+				<li class="fieldcontain">
+					<span id="website-label" class="property-label"><g:message code="course.website.label" default="website" /></span>
+					
+						<span class="property-value" aria-labelledby="website-label"><a href="${courseInstance?.website}">${courseInstance?.website?.encodeAsHTML()}</a></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${courseInstance?.description}">
+				<li class="fieldcontain">
+					<span id="description-label" class="property-label"><g:message code="course.description.label" default="Description" /></span>
+					
+						<span class="property-value" aria-labelledby="description-label">${courseInstance?.description?.encodeAsHTML()}</span>
+					
+				</li>
+				</g:if>
+			
 			</ol>
             <!--
 			<g:form>

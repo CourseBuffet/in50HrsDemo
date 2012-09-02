@@ -2,5 +2,7 @@ package coursebuffet
 
 class GuestStudent {
     boolean registered = false
-    List<Course> viewedCourses = []
+    Set<Course> viewedCourses = []
+
+    def refresh() {}
 }

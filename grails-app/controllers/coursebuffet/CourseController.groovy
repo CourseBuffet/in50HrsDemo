@@ -9,7 +9,7 @@ class CourseController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index() {
-        println session.user?.dump()
+        session.user.refresh()
         //redirect(action: "list", params: params)
     }
 
@@ -39,7 +39,11 @@ class CourseController {
         params.offset = offset = offset ?: 0
 
         def courseInstances = params.searchtype == 'detailed' ? listDetailed(params) : listInterests(params)
-        courseInstances = courseInstances[offset..[(offset + max), courseInstances.size() - 1].min()]
+        if(courseInstances) {
+            courseInstances = courseInstances[offset..[(offset + max), courseInstances.size() - 1].min()]
+        } else {
+            courseInstances = []
+        }
         [courseInstanceList: courseInstances, courseInstanceTotal: courseInstances.size(), params: params]
     }
 
